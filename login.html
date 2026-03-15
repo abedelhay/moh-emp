@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>تسجيل الدخول — الإدارة العامة للمستشفيات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="dark"]{
+  --bg:#05111e;--bg2:#071625;--bg3:#0b1f33;--card:#0c1d30;
+  --bdr:#14304d;--bdr2:#1a3f62;--tx:#dce8f8;--mt:#5e85aa;--dim:#2e5070;
+  --bl:#2563eb;--bl2:#3b82f6;--bl3:#60a5fa;
+  --gr2:#10b981;--gr3:#6ee7b7;
+  --rd2:#ef4444;--rd3:#fca5a5;
+  --am2:#f59e0b;--am3:#fde68a;
+}
+[data-theme="light"]{
+  --bg:#f0f4f8;--bg2:#e8edf4;--bg3:#f8fafc;--card:#ffffff;
+  --bdr:#cbd5e1;--bdr2:#94a3b8;--tx:#0f172a;--mt:#475569;--dim:#94a3b8;
+  --bl:#1d4ed8;--bl2:#2563eb;--bl3:#1e40af;
+  --gr2:#059669;--gr3:#065f46;
+  --rd2:#dc2626;--rd3:#991b1b;
+  --am2:#d97706;--am3:#92400e;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg);font-family:'Tajawal',sans-serif;color:var(--tx);
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  background-image:
+    radial-gradient(ellipse 70% 50% at 20% 20%,rgba(37,99,235,.08) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 80%,rgba(6,182,212,.06) 0%,transparent 55%);
+  transition:background .25s,color .25s;
+}
+[data-theme="dark"] body::before{
+  content:'';position:fixed;inset:0;z-index:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(255,255,255,.012) 60px,rgba(255,255,255,.012) 61px),
+             repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(255,255,255,.012) 60px,rgba(255,255,255,.012) 61px);
+  pointer-events:none;
+}
+
+/* ── CARD ── */
+.card{
+  position:relative;z-index:1;
+  background:var(--card);border:1px solid var(--bdr2);
+  border-radius:20px;padding:40px 36px 36px;
+  width:100%;max-width:420px;
+  box-shadow:0 24px 80px rgba(0,0,0,.45);
+  animation:slideUp .4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+
+/* ── LOGO ── */
+.logo{text-align:center;margin-bottom:28px}
+.logo-icon{
+  width:68px;height:68px;border-radius:18px;margin:0 auto 14px;
+  background:linear-gradient(135deg,#1d4ed8,#06b6d4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;box-shadow:0 0 40px rgba(37,99,235,.35);
+  animation:pulse 3s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{box-shadow:0 0 30px rgba(37,99,235,.3)}50%{box-shadow:0 0 50px rgba(37,99,235,.55)}}
+.logo-title{font-size:16px;font-weight:800;margin-bottom:3px}
+.logo-sub{font-size:10.5px;color:var(--mt)}
+
+/* ── FORM ── */
+.form-title{font-size:13px;font-weight:700;color:var(--mt);text-align:center;margin-bottom:22px;
+  display:flex;align-items:center;gap:8px;justify-content:center;}
+.form-title::before,.form-title::after{content:'';flex:1;height:1px;background:var(--bdr2)}
+
+.field{margin-bottom:16px}
+.field label{display:block;font-size:10.5px;font-weight:700;color:var(--mt);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}
+.inp-wrap{position:relative}
+.inp-icon{position:absolute;top:50%;right:13px;transform:translateY(-50%);font-size:15px;pointer-events:none;color:var(--mt)}
+.inp{
+  width:100%;height:48px;background:var(--bg2);border:1.5px solid var(--bdr);
+  border-radius:10px;color:var(--tx);font-family:'Tajawal',sans-serif;
+  font-size:14px;padding:0 42px 0 42px;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.inp:focus{border-color:var(--bl2);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+.inp::placeholder{color:var(--dim)}
+.inp-toggle{position:absolute;top:50%;left:12px;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;font-size:15px;color:var(--mt);padding:4px;
+  transition:color .15s;}
+.inp-toggle:hover{color:var(--bl3)}
+
+/* ── SUBMIT ── */
+.btn-login{
+  width:100%;height:48px;background:linear-gradient(135deg,#1d4ed8,#06b6d4);
+  border:none;border-radius:10px;color:#fff;font-family:'Tajawal',sans-serif;
+  font-size:14px;font-weight:800;cursor:pointer;margin-top:8px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all .2s;position:relative;overflow:hidden;
+}
+.btn-login::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:background .15s}
+.btn-login:hover::after{background:rgba(255,255,255,.07)}
+.btn-login:active{transform:scale(.98)}
+.btn-login:disabled{opacity:.6;cursor:default}
+.btn-spin{width:18px;height:18px;border:2px solid rgba(255,255,255,.4);
+  border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite;display:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ── ERROR / SUCCESS ── */
+.msg{margin-top:14px;padding:10px 14px;border-radius:9px;font-size:12px;font-weight:700;
+  display:none;align-items:center;gap:8px;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.msg.err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:var(--rd3);display:flex}
+[data-theme="light"] .msg.err{color:var(--rd2)}
+.msg.ok{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:var(--gr3);display:flex}
+[data-theme="light"] .msg.ok{color:var(--gr2)}
+
+/* ── USERS HINT ── */
+.hint{margin-top:20px;padding:12px 14px;border-radius:9px;
+  background:rgba(255,255,255,.03);border:1px solid var(--bdr);
+  font-size:10px;color:var(--dim);}
+[data-theme="light"] .hint{background:rgba(0,0,0,.03)}
+.hint-title{font-weight:800;color:var(--mt);margin-bottom:7px;font-size:10.5px}
+.hint-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--bdr);}
+.hint-row:last-child{border:none}
+.hint-user{font-weight:700;color:var(--tx)}
+.hint-badge{font-size:9px;padding:1px 7px;border-radius:8px;font-weight:700}
+.b-admin{background:rgba(239,68,68,.15);color:var(--rd3)}
+[data-theme="light"] .b-admin{color:var(--rd2)}
+.b-mgr{background:rgba(245,158,11,.15);color:var(--am3)}
+[data-theme="light"] .b-mgr{color:var(--am2)}
+.b-view{background:rgba(16,185,129,.15);color:var(--gr3)}
+[data-theme="light"] .b-view{color:var(--gr2)}
+
+/* ── FOOTER ── */
+.footer{margin-top:18px;text-align:center;font-size:9.5px;color:var(--dim)}
+.theme-toggle{position:fixed;top:14px;left:14px;background:none;
+  border:1px solid var(--bdr2);border-radius:8px;padding:5px 10px;
+  cursor:pointer;font-size:15px;color:var(--mt);transition:all .15s;z-index:10;}
+.theme-toggle:hover{border-color:var(--bl2)}
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙</button>
+
+<div class="card">
+  <div class="logo">
+    <div class="logo-icon">🏥</div>
+    <div class="logo-title">الإدارة العامة للمستشفيات</div>
+    <div class="logo-sub">وزارة الصحة الفلسطينية — نظام إدارة الكادر البشري</div>
+  </div>
+
+  <div class="form-title">🔐 تسجيل الدخول</div>
+
+  <div class="field">
+    <label>اسم المستخدم</label>
+    <div class="inp-wrap">
+      <span class="inp-icon">👤</span>
+      <input class="inp" id="username" type="text" placeholder="أدخل اسم المستخدم"
+             autocomplete="username" autocapitalize="none" spellcheck="false">
+    </div>
+  </div>
+
+  <div class="field">
+    <label>كلمة المرور</label>
+    <div class="inp-wrap">
+      <span class="inp-icon">🔒</span>
+      <input class="inp" id="password" type="password" placeholder="أدخل كلمة المرور"
+             autocomplete="current-password">
+      <button class="inp-toggle" id="eyeBtn" onclick="togglePwd()" type="button">👁️</button>
+    </div>
+  </div>
+
+  <button class="btn-login" id="loginBtn" onclick="doLogin()">
+    <span id="btnText">دخول</span>
+    <div class="btn-spin" id="btnSpin"></div>
+  </button>
+
+  <div class="msg" id="msgBox"><span id="msgText"></span></div>
+
+  <div class="hint">
+    <div class="hint-title">🔑 بيانات الدخول التجريبية</div>
+    <div class="hint-row"><span class="hint-user">admin</span><span>Admin@2025</span><span class="hint-badge b-admin">مدير</span></div>
+    <div class="hint-row"><span class="hint-user">manager</span><span>Mgr@2025</span><span class="hint-badge b-mgr">مشرف</span></div>
+    <div class="hint-row"><span class="hint-user">viewer</span><span>View@2025</span><span class="hint-badge b-view">مشاهدة</span></div>
+  </div>
+
+  <div class="footer">جميع الاتصالات مشفرة · لا تشارك بيانات دخولك مع أحد</div>
+</div>
+
+<script>
+// ── USERS (SHA-256 hashed passwords) ──────────────────────────
+var USERS = {
+  'admin':   {hash:'fcf7bb6d546cfb82d2e55486984ae7a1862a666acb441e0cf8b4ed34a4fcf9d7', role:'admin',   name:'مدير النظام'},
+  'manager': {hash:'c80a023be54e10f19b56e4021edf8fdf5a439dd1fbe08f0508db3df249140271', role:'manager', name:'المشرف'},
+  'viewer':  {hash:'0680854122d4778ea16736adcca0b65fa3b6f78cfc27a3c3a25e6f49a97cbe98', role:'viewer',  name:'مستخدم مشاهدة'},
+};
+
+var SESSION_KEY = 'hrms_session';
+var attempts    = 0;
+var lockUntil   = 0;
+
+// ── THEME ────────────────────────────────────────────────────
+(function(){
+  var t = localStorage.getItem('srch_theme')||'dark';
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('themeBtn').textContent = t==='dark'?'🌙':'☀️';
+})();
+function toggleTheme(){
+  var t = document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('themeBtn').textContent = t==='dark'?'🌙':'☀️';
+  localStorage.setItem('srch_theme', t);
+}
+
+// ── ALREADY LOGGED IN? ───────────────────────────────────────
+(function(){
+  var s = sessionStorage.getItem(SESSION_KEY);
+  if(s){
+    try{
+      var sess = JSON.parse(s);
+      if(sess.token && Date.now() - sess.ts < 8*60*60*1000){
+        // redirect to main app
+        window.location.href = 'employee_search.html';
+        return;
+      }
+    }catch(e){}
+    sessionStorage.removeItem(SESSION_KEY);
+  }
+})();
+
+// ── HELPERS ──────────────────────────────────────────────────
+async function sha256(str){
+  var buf  = new TextEncoder().encode(str);
+  var hash = await crypto.subtle.digest('SHA-256', buf);
+  return Array.from(new Uint8Array(hash)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+}
+
+function showMsg(text, type){
+  var box = document.getElementById('msgBox');
+  var txt = document.getElementById('msgText');
+  box.className = 'msg ' + type;
+  txt.textContent = text;
+}
+
+function setLoading(on){
+  var btn  = document.getElementById('loginBtn');
+  var text = document.getElementById('btnText');
+  var spin = document.getElementById('btnSpin');
+  btn.disabled = on;
+  text.style.display = on ? 'none' : '';
+  spin.style.display  = on ? 'block' : 'none';
+}
+
+// ── LOGIN ────────────────────────────────────────────────────
+async function doLogin(){
+  // فحص القفل
+  if(Date.now() < lockUntil){
+    var secs = Math.ceil((lockUntil - Date.now())/1000);
+    showMsg('⛔ محاولات كثيرة. انتظر ' + secs + ' ثانية', 'err');
+    return;
+  }
+
+  var username = document.getElementById('username').value.trim().toLowerCase();
+  var password = document.getElementById('password').value;
+
+  if(!username || !password){
+    showMsg('⚠️ يرجى إدخال اسم المستخدم وكلمة المرور', 'err');
+    return;
+  }
+
+  setLoading(true);
+
+  // تأخير بسيط لمنع Brute Force + تجربة أفضل
+  await new Promise(function(r){ setTimeout(r, 600); });
+
+  var user = USERS[username];
+  if(!user){
+    attempts++;
+    setLoading(false);
+    checkLock();
+    showMsg('❌ اسم المستخدم أو كلمة المرور غير صحيحة', 'err');
+    shake();
+    return;
+  }
+
+  var hash = await sha256(password);
+  if(hash !== user.hash){
+    attempts++;
+    setLoading(false);
+    checkLock();
+    showMsg('❌ اسم المستخدم أو كلمة المرور غير صحيحة', 'err');
+    shake();
+    return;
+  }
+
+  // نجح تسجيل الدخول
+  attempts = 0;
+  var token = await sha256(username + Date.now() + Math.random());
+  var session = {
+    token:    token,
+    username: username,
+    name:     user.name,
+    role:     user.role,
+    ts:       Date.now()
+  };
+  sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+
+  showMsg('✅ مرحباً ' + user.name + '! جاري التوجيه...', 'ok');
+  setLoading(false);
+
+  setTimeout(function(){
+    window.location.href = 'employee_search.html';
+  }, 700);
+}
+
+function checkLock(){
+  if(attempts >= 5){
+    lockUntil = Date.now() + 60*1000; // قفل دقيقة
+    showMsg('⛔ تم تجاوز عدد المحاولات. محظور لمدة دقيقة', 'err');
+    attempts = 0;
+  } else if(attempts >= 3){
+    showMsg('❌ بيانات خاطئة (' + attempts + '/5 محاولات)', 'err');
+  }
+}
+
+function shake(){
+  var card = document.querySelector('.card');
+  card.style.animation = 'none';
+  card.style.transform = 'translateX(-6px)';
+  setTimeout(function(){card.style.transform='translateX(6px)';},80);
+  setTimeout(function(){card.style.transform='translateX(-4px)';},160);
+  setTimeout(function(){card.style.transform='translateX(4px)';},240);
+  setTimeout(function(){card.style.transform='translateX(0)';},320);
+}
+
+// ── TOGGLE PASSWORD ──────────────────────────────────────────
+var pwdVisible = false;
+function togglePwd(){
+  pwdVisible = !pwdVisible;
+  var inp = document.getElementById('password');
+  var btn = document.getElementById('eyeBtn');
+  inp.type = pwdVisible ? 'text' : 'password';
+  btn.textContent = pwdVisible ? '🙈' : '👁️';
+}
+
+// ── ENTER KEY ────────────────────────────────────────────────
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Enter') doLogin();
+});
+
+// ── AUTO FOCUS ───────────────────────────────────────────────
+setTimeout(function(){ document.getElementById('username').focus(); }, 300);
+</script>
+</body>
+</html>
