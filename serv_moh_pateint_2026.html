@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>استبيان تقييم جودة إدخال البيانات — قسم شؤون المرضى</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117;--bg2:#161b22;--bg3:#1c2128;--bg4:#21262d;
+  --border:#30363d;--border2:#3d444d;
+  --text:#e6edf3;--text2:#8b949e;--text3:#6e7681;
+  --accent:#388bfd;
+  --blue:#388bfd;--blue-bg:#1f3a5f;
+  --teal:#2ea043;--teal-bg:#0d2b1a;--teal-t:#3fb950;
+  --amber:#d29922;--amber-bg:#2d1f00;--amber-t:#e3b341;
+  --red:#f85149;--red-bg:#3d0d0b;--red-t:#ff7b72;
+  --purple:#8957e5;--purple-bg:#271d45;--purple-t:#bc8cff;
+  --coral:#db6d28;--coral-bg:#2f1700;--coral-t:#ffa657;
+  --radius:8px;--radius-lg:12px;
+  color-scheme:dark;
+}
+[data-theme="light"]{
+  --bg:#f6f8fa;--bg2:#fff;--bg3:#f0f2f5;--bg4:#e4e8ec;
+  --border:#d0d7de;--border2:#b7bec8;
+  --text:#1f2328;--text2:#57606a;--text3:#6e7781;
+  --blue:#0969da;--blue-bg:#ddf4ff;
+  --teal:#1a7f37;--teal-bg:#dafbe1;--teal-t:#1a7f37;
+  --amber:#9a6700;--amber-bg:#fff8c5;--amber-t:#9a6700;
+  --red:#cf222e;--red-bg:#ffebe9;--red-t:#cf222e;
+  --purple:#6639ba;--purple-bg:#fbefff;--purple-t:#6639ba;
+  --coral:#bc4c00;--coral-bg:#fff1e5;--coral-t:#bc4c00;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.7;transition:background .3s,color .3s}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
+
+/* Header */
+.header{background:var(--bg2);border-bottom:3px solid var(--accent);padding:0 2rem;height:60px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.2)}
+.logo{font-family:'Tajawal',sans-serif;font-size:16px;font-weight:900;color:var(--accent)}
+.header-sep{color:var(--border2);font-size:18px}
+.header-sub{font-size:12px;color:var(--text2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.header-right{display:flex;gap:8px;align-items:center;flex-shrink:0}
+
+/* Progress */
+.prog-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 2rem;display:flex;align-items:center;gap:14px}
+.prog-track{flex:1;height:5px;background:var(--bg4);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .4s ease;width:0%}
+.prog-lbl{font-size:12px;color:var(--text2);white-space:nowrap}
+
+/* Container */
+.container{max-width:820px;margin:0 auto;padding:2rem 1.5rem 5rem}
+
+/* Intro */
+.intro-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem 1.75rem;margin-bottom:2rem;border-top:4px solid var(--accent)}
+.intro-card h1{font-family:'Tajawal',sans-serif;font-size:20px;font-weight:800;color:var(--text);margin-bottom:8px}
+.intro-card p{font-size:13px;color:var(--text2);line-height:1.8}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.meta-pill{font-size:11px;padding:3px 10px;border-radius:99px;border:1px solid var(--border2);color:var(--text2);background:var(--bg3)}
+
+/* Section card */
+.sec-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.25rem;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.sec-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:1.1rem;padding-bottom:.9rem;border-bottom:1px solid var(--border)}
+.sec-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;white-space:nowrap;margin-top:2px}
+.sec-title{font-size:15px;font-weight:600;color:var(--text)}
+.badge-blue{background:var(--blue-bg);color:#58a6ff;border:1px solid #1f4080}
+.badge-teal{background:var(--teal-bg);color:var(--teal-t);border:1px solid #1a4a28}
+.badge-amber{background:var(--amber-bg);color:var(--amber-t);border:1px solid #5a3d00}
+.badge-red{background:var(--red-bg);color:var(--red-t);border:1px solid #7a1c18}
+.badge-purple{background:var(--purple-bg);color:var(--purple-t);border:1px solid #4d2e99}
+.badge-coral{background:var(--coral-bg);color:var(--coral-t);border:1px solid #5e3000}
+.badge-gray{background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
+
+/* KPI strip */
+.kpi-strip{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px;margin-bottom:1rem}
+.kpi-strip-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.kpi-tags{display:flex;flex-wrap:wrap;gap:5px}
+.kpi-tag{font-size:11px;padding:3px 8px;border-radius:99px;border:1px solid}
+.kpi-blue{background:var(--blue-bg);color:#58a6ff;border-color:#1f4080}
+.kpi-teal{background:var(--teal-bg);color:var(--teal-t);border-color:#1a4a28}
+.kpi-amber{background:var(--amber-bg);color:var(--amber-t);border-color:#5a3d00}
+.kpi-red{background:var(--red-bg);color:var(--red-t);border-color:#7a1c18}
+.kpi-purple{background:var(--purple-bg);color:var(--purple-t);border-color:#4d2e99}
+.kpi-coral{background:var(--coral-bg);color:var(--coral-t);border-color:#5e3000}
+.kpi-gray{background:var(--bg3);color:var(--text2);border-color:var(--border)}
+
+/* Questions */
+.q-sep{height:1px;background:var(--border);margin:.9rem 0}
+.q-block{margin-bottom:0}
+.q-lbl{font-size:13px;color:var(--text);margin-bottom:8px;display:flex;gap:8px;align-items:flex-start}
+.q-num{font-size:11px;font-weight:700;color:var(--text3);min-width:22px;padding-top:2px;flex-shrink:0}
+.q-txt{flex:1;line-height:1.6}
+.req-star{color:var(--red-t);margin-right:2px}
+.q-block.invalid .q-txt{color:var(--red-t)}
+.val-msg{font-size:11px;color:var(--red-t);margin-top:4px;margin-right:30px;display:none}
+.q-block.invalid .val-msg{display:block}
+
+/* Options */
+.opts-grid{display:flex;flex-wrap:wrap;gap:7px;margin-right:30px}
+.opt-btn{font-family:'Cairo',sans-serif;font-size:12px;padding:7px 16px;border-radius:var(--radius);border:1px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;transition:all .15s;user-select:none}
+.opt-btn:hover{border-color:var(--accent);color:var(--text)}
+.opt-btn.selected{background:color-mix(in srgb, var(--accent) 15%, transparent);border-color:var(--accent);color:var(--accent);font-weight:600}
+
+/* Scale */
+.scale-row{margin-right:30px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.scale-lbl{font-size:11px;color:var(--text3)}
+.scale-btn{font-family:'Cairo',sans-serif;font-size:12px;width:42px;height:34px;border-radius:var(--radius);border:1px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;font-weight:500}
+.scale-btn:hover{border-color:var(--accent);color:var(--text)}
+.scale-btn.selected{background:color-mix(in srgb, var(--accent) 15%, transparent);border-color:var(--accent);color:var(--accent);font-weight:700}
+
+/* Text inputs */
+.txt-in,.num-in,.txtarea-in{font-family:'Cairo',sans-serif;font-size:13px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text);padding:9px 12px;outline:none;transition:border-color .15s}
+.txt-in:focus,.num-in:focus,.txtarea-in:focus{border-color:var(--accent)}
+.txt-in{width:calc(100% - 30px);margin-right:30px}
+.num-in{width:130px;margin-right:30px}
+.txtarea-in{width:calc(100% - 30px);margin-right:30px;resize:vertical;min-height:70px;display:block}
+
+/* Rank */
+.rank-list{margin-right:30px;display:flex;flex-direction:column;gap:6px}
+.rank-row{display:flex;align-items:center;gap:10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px}
+.rank-in{font-family:'Cairo',sans-serif;width:44px;height:28px;background:var(--bg4);border:1px solid var(--border2);border-radius:6px;color:var(--text);text-align:center;font-size:13px;outline:none}
+.rank-in:focus{border-color:var(--accent)}
+.rank-lbl{font-size:12px;color:var(--text2);flex:1}
+
+/* Buttons */
+.btn{font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;padding:9px 20px;border-radius:var(--radius);border:1px solid;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:7px}
+.btn-accent{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-accent:hover{opacity:.88}
+.btn-secondary{background:var(--bg3);border-color:var(--border2);color:var(--text)}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Actions bar */
+.actions-bar{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:11px 18px;font-size:13px;color:var(--text);transition:transform .3s;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{border-color:var(--teal);color:var(--teal-t)}
+.toast.error{border-color:var(--red);color:var(--red-t)}
+
+/* Success screen */
+.success-wrap{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;gap:1.5rem}
+.success-icon{width:80px;height:80px;border-radius:50%;background:var(--teal-bg);border:2px solid var(--teal);display:flex;align-items:center;justify-content:center;font-size:36px}
+.success-wrap h2{font-family:'Tajawal',sans-serif;font-size:24px;font-weight:800;color:var(--text)}
+.success-wrap p{font-size:14px;color:var(--text2);max-width:420px;line-height:1.8}
+.dl-card{background:var(--bg2);border:1px solid var(--teal);border-radius:var(--radius-lg);padding:1.25rem 1.75rem;min-width:320px}
+.dl-fname{font-size:13px;color:var(--teal-t);font-family:monospace;margin-bottom:8px;word-break:break-all}
+.dl-meta{font-size:11px;color:var(--text3);margin-bottom:14px}
+.theme-btn{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .15s;color:var(--text2)}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:600px){.container{padding:1rem 1rem 4rem}.opts-grid{gap:5px}.opt-btn{padding:6px 12px}.header{padding:0 1rem}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <span class="logo">E-Hospital</span>
+  <span class="header-sep">|</span>
+  <span class="header-sub">استبيان تقييم جودة إدخال البيانات — قسم شؤون المرضى</span>
+  <div class="header-right">
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="تبديل السمة">🌙</button>
+    <button class="btn btn-secondary" style="font-size:12px;padding:6px 12px" onclick="saveDraft()">💾 حفظ مؤقت</button>
+    <button class="btn btn-secondary" style="font-size:12px;padding:6px 12px" onclick="loadDraft()">📂 استعادة</button>
+  </div>
+</header>
+
+<div class="prog-bar">
+  <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
+  <span class="prog-lbl" id="progLbl">0 / 41</span>
+</div>
+
+<div class="container" id="mainForm">
+  <div class="intro-card">
+    <h1>استبيان تقييم جودة إدخال البيانات — قسم شؤون المرضى</h1>
+    <p>موجّه لرؤساء أقسام شؤون المرضى في المستشفيات العاملة حاليًا في قطاع غزة.</p>
+    <div class="meta-row">
+      <span class="meta-pill">🏥 إدارة المستشفى</span>
+      <span class="meta-pill">👤 رئيس قسم شؤون المرضى</span>
+      <span class="meta-pill">⏱ 25–35 دقيقة</span>
+      <span class="meta-pill">v2.0</span>
+      <span class="meta-pill">جميع الحقول * مطلوبة</span>
+    </div>
+  </div>
+
+  <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge badge-gray">بيانات عامة</span>
+        <div class="sec-title">معلومات المستشفى والمستجيب</div>
+      </div>
+      <div class="q-block" data-qid="q1" data-req="1">
+        <div class="q-lbl"><span class="q-num">1.</span><span class="q-txt">اسم المستشفى <span class="req-star">*</span></span></div>
+        <input class="txt-in" type="text" oninput="upd()" data-answer data-qi="q1">
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q2" data-req="1">
+        <div class="q-lbl"><span class="q-num">2.</span><span class="q-txt">نوع المستشفى <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q2')" data-val="حكومي">حكومي</button><button class="opt-btn" onclick="sel(this,'q2')" data-val="أهلي / خيري">أهلي / خيري</button><button class="opt-btn" onclick="sel(this,'q2')" data-val="ميداني">ميداني</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q3" data-req="1">
+        <div class="q-lbl"><span class="q-num">3.</span><span class="q-txt">عدد الأسرة الفعلية العاملة حاليًا <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q3')" data-val="أقل من 50">أقل من 50</button><button class="opt-btn" onclick="sel(this,'q3')" data-val="50–100">50–100</button><button class="opt-btn" onclick="sel(this,'q3')" data-val="101–200">101–200</button><button class="opt-btn" onclick="sel(this,'q3')" data-val="أكثر من 200">أكثر من 200</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q4" data-req="1">
+        <div class="q-lbl"><span class="q-num">4.</span><span class="q-txt">عدد موظفي إدخال البيانات العاملين حاليًا في المستشفى <span class="req-star">*</span></span></div>
+        <input class="num-in" type="number" min="0" placeholder="0" oninput="upd()" data-answer data-qi="q4">
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q5" data-req="1">
+        <div class="q-lbl"><span class="q-num">5.</span><span class="q-txt">هل نظام E-Hospital يعمل بشكل منتظم حاليًا؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q5')" data-val="نعم، بشكل كامل">نعم، بشكل كامل</button><button class="opt-btn" onclick="sel(this,'q5')" data-val="يعمل جزئيًا">يعمل جزئيًا</button><button class="opt-btn" onclick="sel(this,'q5')" data-val="متوقف">متوقف</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div>
+    </div><div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge badge-teal">المحور 1</span>
+        <div class="sec-title">السجل الطبي والأرشفة الإلكترونية</div>
+      </div>
+      
+      <div class="kpi-strip">
+        <div class="kpi-strip-label">مؤشرات الأداء الرئيسية KPIs</div>
+        <div class="kpi-tags"><span class="kpi-tag kpi-teal">% ملفات مكتملة في E-Hospital</span><span class="kpi-tag kpi-teal">% ملفات مفقودة</span><span class="kpi-tag kpi-teal">معدل استرجاع الملف</span></div>
+      </div><div class="q-block" data-qid="q6" data-req="1">
+        <div class="q-lbl"><span class="q-num">6.</span><span class="q-txt">ما نسبة ملفات المرضى المكتملة إلكترونيًا في E-Hospital؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q6')" data-val="0–20%">0–20%</button><button class="opt-btn" onclick="sel(this,'q6')" data-val="21–40%">21–40%</button><button class="opt-btn" onclick="sel(this,'q6')" data-val="41–60%">41–60%</button><button class="opt-btn" onclick="sel(this,'q6')" data-val="61–80%">61–80%</button><button class="opt-btn" onclick="sel(this,'q6')" data-val="81–100%">81–100%</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q7" data-req="1">
+        <div class="q-lbl"><span class="q-num">7.</span><span class="q-txt">هل تعرضت ملفات المرضى للفقدان خلال فترة الحرب؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q7')" data-val="نعم، بشكل كبير">نعم، بشكل كبير</button><button class="opt-btn" onclick="sel(this,'q7')" data-val="نعم، بشكل جزئي">نعم، بشكل جزئي</button><button class="opt-btn" onclick="sel(this,'q7')" data-val="لا">لا</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q8" data-req="1">
+        <div class="q-lbl"><span class="q-num">8.</span><span class="q-txt">هل تم استكمال أرشفة ملفات ما قبل الحرب في E-Hospital؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q8')" data-val="نعم بالكامل">نعم بالكامل</button><button class="opt-btn" onclick="sel(this,'q8')" data-val="جزئيًا (أقل من 50%)">جزئيًا (أقل من 50%)</button><button class="opt-btn" onclick="sel(this,'q8')" data-val="لم تبدأ بعد">لم تبدأ بعد</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q9" data-req="1">
+        <div class="q-lbl"><span class="q-num">9.</span><span class="q-txt">ما متوسط الوقت اللازم لاسترجاع ملف مريض قديم؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q9')" data-val="أقل من 5 دقائق">أقل من 5 دقائق</button><button class="opt-btn" onclick="sel(this,'q9')" data-val="5–15 دقيقة">5–15 دقيقة</button><button class="opt-btn" onclick="sel(this,'q9')" data-val="15–30 دقيقة">15–30 دقيقة</button><button class="opt-btn" onclick="sel(this,'q9')" data-val="أكثر من 30 دقيقة">أكثر من 30 دقيقة</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q36" data-req="1">
+        <div class="q-lbl"><span class="q-num">10.</span><span class="q-txt">كم عدد الملفات الطبية التي يتم سحبها يومياً ؟ <span class="req-star">*</span></span></div>
+        <input class="num-in" type="number" min="0" placeholder="0" oninput="upd()" data-answer data-qi="q36">
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q37" data-req="1">
+        <div class="q-lbl"><span class="q-num">11.</span><span class="q-txt">كم عدد أجهزة الماسح الضوئي في الأرشيف ؟ <span class="req-star">*</span></span></div>
+        <input class="num-in" type="number" min="0" placeholder="0" oninput="upd()" data-answer data-qi="q37">
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q38" data-req="1">
+        <div class="q-lbl"><span class="q-num">12.</span><span class="q-txt">ما متوسط الوقت اللازم لمسح ضوئي ملف مريض ؟  <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="msel(this,'q38')" data-val="أقل من 5 دقائق">أقل من 5 دقائق</button><button class="opt-btn" onclick="msel(this,'q38')" data-val="أكثر من 5 دقائق">أكثر من 5 دقائق</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div>
+    </div><div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge badge-blue">المحور 2</span>
+        <div class="sec-title">تسجيل دخول وخروج المرضى المبيتين</div>
+      </div>
+      
+      <div class="kpi-strip">
+        <div class="kpi-strip-label">مؤشرات الأداء الرئيسية KPIs</div>
+        <div class="kpi-tags"><span class="kpi-tag kpi-blue">% تسجيل كامل عند الدخول</span><span class="kpi-tag kpi-blue">معدل خطأ ICD-10</span></div>
+      </div><div class="q-block" data-qid="q10" data-req="1">
+        <div class="q-lbl"><span class="q-num">13.</span><span class="q-txt">ما نسبة سجلات الدخول التي تُدخَل كاملةً في اليوم ذاته؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q10')" data-val="أقل من 25%">أقل من 25%</button><button class="opt-btn" onclick="sel(this,'q10')" data-val="25–50%">25–50%</button><button class="opt-btn" onclick="sel(this,'q10')" data-val="51–75%">51–75%</button><button class="opt-btn" onclick="sel(this,'q10')" data-val="76–100%">76–100%</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q11" data-req="1">
+        <div class="q-lbl"><span class="q-num">14.</span><span class="q-txt">هل يلتزم الأطباء بإدخال كود ICD-10 عند تسجيل الخروج؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q11')" data-val="دائمًا">دائمًا</button><button class="opt-btn" onclick="sel(this,'q11')" data-val="أحيانًا">أحيانًا</button><button class="opt-btn" onclick="sel(this,'q11')" data-val="نادرًا">نادرًا</button><button class="opt-btn" onclick="sel(this,'q11')" data-val="لا يحدث">لا يحدث</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q12" data-req="1">
+        <div class="q-lbl"><span class="q-num">15.</span><span class="q-txt">ما أبرز أسباب تأخر إدخال بيانات الدخول/الخروج؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="msel(this,'q12')" data-val="انقطاع الكهرباء">انقطاع الكهرباء</button><button class="opt-btn" onclick="msel(this,'q12')" data-val="ضغط العمل">ضغط العمل</button><button class="opt-btn" onclick="msel(this,'q12')" data-val="شُح الأجهزة">شُح الأجهزة</button><button class="opt-btn" onclick="msel(this,'q12')" data-val="ضعف التدريب">ضعف التدريب</button><button class="opt-btn" onclick="msel(this,'q12')" data-val="إهمال الموظف">إهمال الموظف</button><button class="opt-btn" onclick="msel(this,'q12')" data-val="أخرى">أخرى</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div>
+    </div><div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge badge-red">المحور 3</span>
+        <div class="sec-title">قسم الطوارئ</div>
+      </div>
+      
+      <div class="kpi-strip">
+        <div class="kpi-strip-label">مؤشرات الأداء الرئيسية KPIs</div>
+        <div class="kpi-tags"><span class="kpi-tag kpi-red">% حالات مسجلة</span><span class="kpi-tag kpi-red">عدد الأجهزة العاملة</span></div>
+      </div><div class="q-block" data-qid="q13" data-req="1">
+        <div class="q-lbl"><span class="q-num">16.</span><span class="q-txt">ما نسبة حالات الطوارئ المسجلة عبر نظام E-Hospital خلال 24 ساعة؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q13')" data-val="أقل من 25%">أقل من 25%</button><button class="opt-btn" onclick="sel(this,'q13')" data-val="25–50%">25–50%</button><button class="opt-btn" onclick="sel(this,'q13')" data-val="51–75%">51–75%</button><button class="opt-btn" onclick="sel(this,'q13')" data-val="76–100%">76–100%</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q14" data-req="1">
+        <div class="q-lbl"><span class="q-num">17.</span><span class="q-txt">ما عدد أجهزة الحاسوب المتصلة بـ E-Hospital في قسم الطوارئ؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q14')" data-val="لا يوجد">لا يوجد</button><button class="opt-btn" onclick="sel(this,'q14')" data-val="1 جهاز">1 جهاز</button><button class="opt-btn" onclick="sel(this,'q14')" data-val="2–3 أجهزة">2–3 أجهزة</button><button class="opt-btn" onclick="sel(this,'q14')" data-val="أكثر من 3">أكثر من 3</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q15" data-req="1">
+        <div class="q-lbl"><span class="q-num">18.</span><span class="q-txt">هل توجد مشكلة في توفر ورق الطباعة في الطوارئ؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q15')" data-val="مستمرة">مستمرة</button><button class="opt-btn" onclick="sel(this,'q15')" data-val="متقطعة">متقطعة</button><button class="opt-btn" onclick="sel(this,'q15')" data-val="لا توجد">لا توجد</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q39" data-req="1">
+        <div class="q-lbl"><span class="q-num">19.</span><span class="q-txt">هل يتم تخريج تذاكر الطوارئ من نظام E Hospital  حسب توصية الطبيب المعالج ؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q39')" data-val="نعم يتم تخريجها حسب توصية الطبيب">نعم يتم تخريجها حسب توصية الطبيب</button><button class="opt-btn" onclick="sel(this,'q39')" data-val="يتم تخريجها فقد تذكرة">يتم تخريجها فقد تذكرة</button><button class="opt-btn" onclick="sel(this,'q39')" data-val="يتم تخريجها بشكل وهمي">يتم تخريجها بشكل وهمي</button><button class="opt-btn" onclick="sel(this,'q39')" data-val="يتم تخريجها بشكل جماعي">يتم تخريجها بشكل جماعي</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q40" data-req="1">
+        <div class="q-lbl"><span class="q-num">20.</span><span class="q-txt">نسبة فقدان تذاكر الطوارئ خلال اليوم ؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q40')" data-val="20% أقل">20% أقل</button><button class="opt-btn" onclick="sel(this,'q40')" data-val="50% أقل">50% أقل</button><button class="opt-btn" onclick="sel(this,'q40')" data-val="70% أقل">70% أقل</button><button class="opt-btn" onclick="sel(this,'q40')" data-val="100% اقل">100% اقل</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q41" data-req="1">
+        <div class="q-lbl"><span class="q-num">21.</span><span class="q-txt">هل يوجد الية واضحة لتعديل بيانات تذكرة الطوارئ للمريض في حالة تم طلب التعديل ؟ اذكر الالية المتبعة لديكم . <span class="req-star">*</span></span></div>
+        <input class="txt-in" type="text" oninput="upd()" data-answer data-qi="q41">
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q42" data-req="1">
+        <div class="q-lbl"><span class="q-num">22.</span><span class="q-txt">نسبة التزام مدخلي البيانات في الطوارئ باستخدام الحساب الالكتروني الخاص بع عبر نظام  E Hospital ؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q42')" data-val="100% لجميع مدخلي البيانات">100% لجميع مدخلي البيانات</button><button class="opt-btn" onclick="sel(this,'q42')" data-val="50 %">50 %</button><button class="opt-btn" onclick="sel(this,'q42')" data-val="لا يوجد التزام">لا يوجد التزام</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q43" data-req="1">
+        <div class="q-lbl"><span class="q-num">23.</span><span class="q-txt">هل يوجد متابعة لحظية من مسؤول الطوارئ في شؤون المرضى للبيانات التي يتم ادخالها والتدقيق عليها؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q43')" data-val="نعم">نعم</button><button class="opt-btn" onclick="sel(this,'q43')" data-val="لا">لا</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q44" data-req="1">
+        <div class="q-lbl"><span class="q-num">24.</span><span class="q-txt">هل يتم العمل بنظام الفرز الطبي لديكم في الطوارئ؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q44')" data-val="نعم">نعم</button><button class="opt-btn" onclick="sel(this,'q44')" data-val="لا">لا</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div>
+    </div><div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge badge-amber">المحور 4</span>
+        <div class="sec-title">التقارير الإحصائية والأداء</div>
+      </div>
+      
+      <div class="kpi-strip">
+        <div class="kpi-strip-label">مؤشرات الأداء الرئيسية KPIs</div>
+        <div class="kpi-tags"><span class="kpi-tag kpi-amber">دقة الإحصائيات</span><span class="kpi-tag kpi-amber">% مؤشرات آلية</span></div>
+      </div><div class="q-block" data-qid="q29" data-req="1">
+        <div class="q-lbl"><span class="q-num">25.</span><span class="q-txt">هل تُصدَر التقارير الإحصائية الشهرية آليًا أم يدويًا؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q29')" data-val="آليًا من E-Hospital">آليًا من E-Hospital</button><button class="opt-btn" onclick="sel(this,'q29')" data-val="يدويًا">يدويًا</button><button class="opt-btn" onclick="sel(this,'q29')" data-val="مزيج من الاثنين">مزيج من الاثنين</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q30" data-req="1">
+        <div class="q-lbl"><span class="q-num">26.</span><span class="q-txt">على مقياس 1–5، كيف تقيّم دقة بيانات E-Hospital؟ <span class="req-star">*</span></span></div>
+        <div class="scale-row"><span class="scale-lbl">الأدنى</span><button class="scale-btn" onclick="ssel(this,'q30')" data-val="1">1</button><button class="scale-btn" onclick="ssel(this,'q30')" data-val="2">2</button><button class="scale-btn" onclick="ssel(this,'q30')" data-val="3">3</button><button class="scale-btn" onclick="ssel(this,'q30')" data-val="4">4</button><button class="scale-btn" onclick="ssel(this,'q30')" data-val="5">5</button><span class="scale-lbl">الأعلى</span></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q31" data-req="1">
+        <div class="q-lbl"><span class="q-num">27.</span><span class="q-txt">هل يتوافق عدد المرضى في E-Hospital مع السجلات اليدوية؟ ( يتم توثيق جميع الملفات) <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q31')" data-val="دائمًا">دائمًا</button><button class="opt-btn" onclick="sel(this,'q31')" data-val="أحيانًا">أحيانًا</button><button class="opt-btn" onclick="sel(this,'q31')" data-val="نادرًا">نادرًا</button><button class="opt-btn" onclick="sel(this,'q31')" data-val="لا توافق">لا توافق</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div>
+    </div><div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge badge-red">المحور 5</span>
+        <div class="sec-title">البنية التحتية والموارد</div>
+      </div>
+      
+      <div class="kpi-strip">
+        <div class="kpi-strip-label">مؤشرات الأداء الرئيسية KPIs</div>
+        <div class="kpi-tags"><span class="kpi-tag kpi-red">ساعات انقطاع الكهرباء</span><span class="kpi-tag kpi-red">% أجهزة عاملة</span></div>
+      </div><div class="q-block" data-qid="q35" data-req="1">
+        <div class="q-lbl"><span class="q-num">28.</span><span class="q-txt">كم ساعة في الأسبوع يتوقف E-Hospital بسبب الكهرباء أو الأعطال؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q35')" data-val="أقل من 4 ساعات">أقل من 4 ساعات</button><button class="opt-btn" onclick="sel(this,'q35')" data-val="4–12 ساعة">4–12 ساعة</button><button class="opt-btn" onclick="sel(this,'q35')" data-val="12–24 ساعة">12–24 ساعة</button><button class="opt-btn" onclick="sel(this,'q35')" data-val="أكثر من 24 ساعة">أكثر من 24 ساعة</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q37" data-req="1">
+        <div class="q-lbl"><span class="q-num">29.</span><span class="q-txt">ما عدد الأجهزة المتصلة بـ E-Hospital والعاملة فعليًا على نظام E Hospital  في أقسامكم ؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q37')" data-val="أقل من 25 جهاز  حاسوب">أقل من 25 جهاز  حاسوب</button><button class="opt-btn" onclick="sel(this,'q37')" data-val="25–50 جهاز  حاسوب">25–50 جهاز  حاسوب</button><button class="opt-btn" onclick="sel(this,'q37')" data-val="76–100 جهاز  حاسوب">76–100 جهاز  حاسوب</button><button class="opt-btn" onclick="sel(this,'q37')" data-val=" أكثر من 100 جهاز حاسوب"> أكثر من 100 جهاز حاسوب</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q38" data-req="1">
+        <div class="q-lbl"><span class="q-num">30.</span><span class="q-txt">هل توجد طابعات كافية ومستلزمات طباعة؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q38')" data-val="نعم كافية">نعم كافية</button><button class="opt-btn" onclick="sel(this,'q38')" data-val="شح متكرر">شح متكرر</button><button class="opt-btn" onclick="sel(this,'q38')" data-val="شُح شبه دائم">شُح شبه دائم</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div>
+    </div><div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge badge-purple">المحور 6</span>
+        <div class="sec-title">الكوادر البشرية والتدريب</div>
+      </div>
+      
+      <div class="kpi-strip">
+        <div class="kpi-strip-label">مؤشرات الأداء الرئيسية KPIs</div>
+        <div class="kpi-tags"><span class="kpi-tag kpi-purple">% موظفين مدرَّبين</span><span class="kpi-tag kpi-purple">تأثير النزوح</span></div>
+      </div><div class="q-block" data-qid="q39" data-req="1">
+        <div class="q-lbl"><span class="q-num">31.</span><span class="q-txt">ما نسبة موظفي إدخال البيانات الذين تلقوا تدريبًا رسميًا على E-Hospital؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q39')" data-val="0–25%">0–25%</button><button class="opt-btn" onclick="sel(this,'q39')" data-val="26–50%">26–50%</button><button class="opt-btn" onclick="sel(this,'q39')" data-val="51–75%">51–75%</button><button class="opt-btn" onclick="sel(this,'q39')" data-val="76–100%">76–100%</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q40" data-req="1">
+        <div class="q-lbl"><span class="q-num">32.</span><span class="q-txt">هل تأثرت الكوادر بسبب النزوح أو الإصابة؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q40')" data-val="نعم، أكثر من 50%">نعم، أكثر من 50%</button><button class="opt-btn" onclick="sel(this,'q40')" data-val="جزئيًا 25–50%">جزئيًا 25–50%</button><button class="opt-btn" onclick="sel(this,'q40')" data-val="بشكل محدود أقل من 25%">بشكل محدود أقل من 25%</button><button class="opt-btn" onclick="sel(this,'q40')" data-val="لا">لا</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q53" data-req="1">
+        <div class="q-lbl"><span class="q-num">33.</span><span class="q-txt">عدد الموظفين العقود والبطالة والتطوع في أقسامكم ولديهم صلاحية ادخال بيانات عبر النظام ؟ <span class="req-star">*</span></span></div>
+        <input class="num-in" type="number" min="0" placeholder="0" oninput="upd()" data-answer data-qi="q53">
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div>
+    </div><div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge badge-teal">ختامي</span>
+        <div class="sec-title">الخلاصة والتوصيات</div>
+      </div>
+      <div class="q-block" data-qid="q42" >
+        <div class="q-lbl"><span class="q-num">34.</span><span class="q-txt">رتّب الأسباب الرئيسية لضعف جودة البيانات (1=الأشد تأثيرًا) </span></div>
+        <div class="rank-list"><div class="rank-row"><input class="rank-in" type="number" min="1" max="7" placeholder="1–7" data-rank="r0" data-qid="q42" oninput="upd()"><span class="rank-lbl">انقطاع الكهرباء والأعطال التقنية</span></div><div class="rank-row"><input class="rank-in" type="number" min="1" max="7" placeholder="1–7" data-rank="r1" data-qid="q42" oninput="upd()"><span class="rank-lbl">ضعف تدريب الموظفين</span></div><div class="rank-row"><input class="rank-in" type="number" min="1" max="7" placeholder="1–7" data-rank="r2" data-qid="q42" oninput="upd()"><span class="rank-lbl">مشاكل برمجية في E-Hospital</span></div><div class="rank-row"><input class="rank-in" type="number" min="1" max="7" placeholder="1–7" data-rank="r3" data-qid="q42" oninput="upd()"><span class="rank-lbl">شح الأجهزة</span></div><div class="rank-row"><input class="rank-in" type="number" min="1" max="7" placeholder="1–7" data-rank="r4" data-qid="q42" oninput="upd()"><span class="rank-lbl">فقدان الملفات بفعل الحرب</span></div><div class="rank-row"><input class="rank-in" type="number" min="1" max="7" placeholder="1–7" data-rank="r5" data-qid="q42" oninput="upd()"><span class="rank-lbl">غياب المتابعة</span></div><div class="rank-row"><input class="rank-in" type="number" min="1" max="7" placeholder="1–7" data-rank="r6" data-qid="q42" oninput="upd()"><span class="rank-lbl">مشاكل مزامنة البيانات</span></div></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q43" >
+        <div class="q-lbl"><span class="q-num">35.</span><span class="q-txt">ما أولى التحسينات الضرورية لرفع دقة البيانات؟ </span></div>
+        <textarea class="txtarea-in" rows="3" oninput="upd()" data-answer data-qi="q43"></textarea>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q44" >
+        <div class="q-lbl"><span class="q-num">36.</span><span class="q-txt">هل تودّ إضافة أي ملاحظات إضافية؟ </span></div>
+        <textarea class="txtarea-in" rows="3" oninput="upd()" data-answer data-qi="q44"></textarea>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div>
+    </div><div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge badge-amber">العيادات الخارجية والعمليات</span>
+        <div class="sec-title">العيادات الخارجية والعمليات</div>
+      </div>
+      <div class="q-block" data-qid="q45" data-req="1">
+        <div class="q-lbl"><span class="q-num">37.</span><span class="q-txt">هل يوجد نظام تفويج للمرضى في العيادات ؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q45')" data-val="نعم">نعم</button><button class="opt-btn" onclick="sel(this,'q45')" data-val="لا">لا</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q46" data-req="1">
+        <div class="q-lbl"><span class="q-num">38.</span><span class="q-txt">يتم تسجيل الحضور لجميع المرضى بموعد وبدون موعد ؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q46')" data-val="نعم">نعم</button><button class="opt-btn" onclick="sel(this,'q46')" data-val="لا">لا</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q47" data-req="1">
+        <div class="q-lbl"><span class="q-num">39.</span><span class="q-txt">نسبة المرضى المراجعين بدون موعد في اليوم ؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q47')" data-val="20% فاقل">20% فاقل</button><button class="opt-btn" onclick="sel(this,'q47')" data-val="50% فاقل">50% فاقل</button><button class="opt-btn" onclick="sel(this,'q47')" data-val="70 % فاقل">70 % فاقل</button><button class="opt-btn" onclick="sel(this,'q47')" data-val="90% فاقل">90% فاقل</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q48" data-req="1">
+        <div class="q-lbl"><span class="q-num">40.</span><span class="q-txt">تم تفعيل العمل بسجل العمليات عبر نظام E hospital  <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q48')" data-val="نعم">نعم</button><button class="opt-btn" onclick="sel(this,'q48')" data-val="لا">لا</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q49" data-req="1">
+        <div class="q-lbl"><span class="q-num">41.</span><span class="q-txt">تتم إدارة قائمة العمليات وحجوزاتها من خلال نظام E Hospital ؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q49')" data-val="نعم">نعم</button><button class="opt-btn" onclick="sel(this,'q49')" data-val="لا">لا</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q50" data-req="1">
+        <div class="q-lbl"><span class="q-num">42.</span><span class="q-txt">هل يتم توثيق سجل العمليات الطارئة والمحولة من الطوارئ عبر النظام ؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q50')" data-val="نعم">نعم</button><button class="opt-btn" onclick="sel(this,'q50')" data-val="لا">لا</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q51" data-req="1">
+        <div class="q-lbl"><span class="q-num">43.</span><span class="q-txt">هل يتم ادخال كود العمليات ICD9  بشكل صحيح عبر النظام للمرضى ؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q51')" data-val="نعم يتم الادخال بشكل صحيح">نعم يتم الادخال بشكل صحيح</button><button class="opt-btn" onclick="sel(this,'q51')" data-val="أحيانا">أحيانا</button><button class="opt-btn" onclick="sel(this,'q51')" data-val="يتم الادخال ولكن بشكل عشوائي">يتم الادخال ولكن بشكل عشوائي</button><button class="opt-btn" onclick="sel(this,'q51')" data-val="لا يتم الادخال">لا يتم الادخال</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div><div class="q-sep"></div><div class="q-block" data-qid="q52" data-req="1">
+        <div class="q-lbl"><span class="q-num">44.</span><span class="q-txt">يتم اعداد التقارير والإحصائيات للعيادات الخارجية والعمليات الجراحية من خلال نظام E Hospital ؟ <span class="req-star">*</span></span></div>
+        <div class="opts-grid"><button class="opt-btn" onclick="sel(this,'q52')" data-val="نعم">نعم</button><button class="opt-btn" onclick="sel(this,'q52')" data-val="لا">لا</button><button class="opt-btn" onclick="sel(this,'q52')" data-val="لا يوجد تطابق بين النظام والواقع">لا يوجد تطابق بين النظام والواقع</button></div>
+        <div class="val-msg">يرجى الإجابة على هذا السؤال</div>
+      </div>
+    </div>
+
+  <div class="actions-bar">
+    <button class="btn btn-secondary" onclick="resetAll()">🔄 إعادة تعيين</button>
+    <button class="btn btn-accent" onclick="submitForm()">📥 تصدير الإجابات JSON</button>
+  </div>
+</div>
+
+<div class="container" id="successScreen" style="display:none">
+  <div class="success-wrap" style="display:flex">
+    <div class="success-icon">✓</div>
+    <h2>تم تصدير الاستبيان بنجاح!</h2>
+    <p>تم حفظ إجاباتك كملف JSON جاهز لرفعه على لوحة الإحصائيات.</p>
+    <div class="dl-card">
+      <div class="dl-fname" id="dlFname">survey.json</div>
+      <div class="dl-meta" id="dlMeta">—</div>
+      <button class="btn btn-accent" id="dlBtn" style="width:100%;justify-content:center">⬇ تحميل مجددًا</button>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <button class="btn btn-secondary" onclick="startOver()">📝 تعبئة جديدة</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SURVEY_ID = 'survey_default_v2';
+const TOTAL_REQ = 41;
+const RESP_FIELD = 'q1';
+const TYPE_FIELD = 'q2';
+const FORM_TITLE = 'استبيان تقييم جودة إدخال البيانات — قسم شؤون المرضى';
+const FORM_VERSION = '2.0';
+const FORM_RESPONDENT = 'رئيس قسم شؤون المرضى';
+const answers = {};
+let isDark = true;
+
+function toggleTheme(){
+  isDark=!isDark;
+  document.documentElement.setAttribute('data-theme',isDark?'':'light');
+  document.getElementById('themeBtn').textContent=isDark?'🌙':'☀️';
+}
+
+function sel(btn,qid){
+  const p=btn.closest('.q-block');
+  p.querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[qid]=btn.dataset.val;
+  p.classList.remove('invalid');
+  upd();
+}
+function msel(btn,qid){
+  btn.classList.toggle('selected');
+  const p=btn.closest('.q-block');
+  const sel=[...p.querySelectorAll('.opt-btn.selected')].map(b=>b.dataset.val);
+  answers[qid]=sel;
+  if(sel.length>0)p.classList.remove('invalid');
+  upd();
+}
+function ssel(btn,qid){
+  const p=btn.closest('.q-block');
+  p.querySelectorAll('.scale-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[qid]=parseInt(btn.dataset.val);
+  p.classList.remove('invalid');
+  upd();
+}
+
+function upd(){
+  const req=document.querySelectorAll('[data-req="1"]');
+  let ans=0;
+  req.forEach(item=>{
+    const qid=item.dataset.qid;
+    const a=answers[qid];
+    const ti=item.querySelector('[data-answer]');
+    if(ti&&ti.value.trim())ans++;
+    else if(a!==undefined&&a!==null&&a!==''&&!(Array.isArray(a)&&a.length===0))ans++;
+  });
+  const pct=TOTAL_REQ?Math.round(ans/TOTAL_REQ*100):0;
+  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('progLbl').textContent=ans+' / '+TOTAL_REQ+' ('+pct+'%)';
+}
+
+function collect(){
+  const d={...answers};
+  document.querySelectorAll('[data-qi]').forEach(inp=>{
+    if(inp.value.trim())d[inp.dataset.qi]=inp.value.trim();
+  });
+  const rankMap={};
+  document.querySelectorAll('[data-rank]').forEach(inp=>{
+    const qid=inp.dataset.qid;
+    if(!rankMap[qid])rankMap[qid]={};
+    const lbl=inp.parentElement.querySelector('.rank-lbl')?.textContent||inp.dataset.rank;
+    if(inp.value)rankMap[qid][lbl]=parseInt(inp.value);
+  });
+  Object.entries(rankMap).forEach(([q,v])=>{d[q+'_ranking']=v;});
+  return d;
+}
+
+function validate(){
+  let ok=true;
+  document.querySelectorAll('[data-req="1"]').forEach(item=>{
+    const qid=item.dataset.qid;
+    const a=answers[qid];
+    const ti=item.querySelector('[data-answer]');
+    const good=(ti&&ti.value.trim())||(a!==undefined&&a!==null&&a!==''&&!(Array.isArray(a)&&a.length===0));
+    if(!good){item.classList.add('invalid');ok=false;}
+    else item.classList.remove('invalid');
+  });
+  return ok;
+}
+
+function submitForm(){
+  if(!validate()){
+    toast('يرجى الإجابة على جميع الأسئلة الإلزامية *','error');
+    const f=document.querySelector('.q-block.invalid');
+    if(f)f.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  const data=collect();
+  const name=data[RESP_FIELD]||'مستجيب';
+  const now=new Date();
+  const payload={
+    meta:{form:FORM_TITLE,surveyId:SURVEY_ID,version:FORM_VERSION,submittedAt:now.toISOString(),hospital:name,hospitalType:data[TYPE_FIELD]||'',respondentRole:FORM_RESPONDENT},
+    answers:data
+  };
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const safe=name.replace(/s+/g,'_').replace(/[^؀-ۿa-zA-Z0-9_-]/g,'');
+  const fname='survey_'+safe+'_'+now.toISOString().split('T')[0]+'.json';
+  const a=document.createElement('a');a.href=url;a.download=fname;a.click();
+  URL.revokeObjectURL(url);
+  document.getElementById('dlFname').textContent=fname;
+  document.getElementById('dlMeta').textContent=now.toLocaleDateString('ar-EG');
+  document.getElementById('dlBtn').onclick=()=>{const a2=document.createElement('a');a2.href=url;a2.download=fname;a2.click();};
+  document.getElementById('mainForm').style.display='none';
+  document.getElementById('successScreen').style.display='block';
+  toast('تم التصدير بنجاح!','success');
+}
+
+function startOver(){
+  document.getElementById('successScreen').style.display='none';
+  document.getElementById('mainForm').style.display='block';
+  resetAll();
+}
+function resetAll(){
+  Object.keys(answers).forEach(k=>delete answers[k]);
+  document.querySelectorAll('.opt-btn,.scale-btn').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('[data-answer],[data-qi],[data-rank]').forEach(i=>i.value='');
+  document.querySelectorAll('.q-block').forEach(i=>i.classList.remove('invalid'));
+  upd();window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function saveDraft(){
+  try{localStorage.setItem('draft_pub_'+SURVEY_ID,JSON.stringify(collect()));toast('تم حفظ المسودة','success');}
+  catch(e){toast('فشل حفظ المسودة','error');}
+}
+function loadDraft(){
+  const raw=localStorage.getItem('draft_pub_'+SURVEY_ID);
+  if(!raw){toast('لا توجد مسودة','error');return;}
+  try{
+    const d=JSON.parse(raw);
+    Object.keys(d).forEach(qid=>{
+      const v=d[qid];
+      const el=document.querySelector('[data-qid="'+qid+'"]');
+      if(!el)return;
+      if(typeof v==='string'){
+        el.querySelectorAll('.opt-btn').forEach(b=>{if(b.dataset.val===v){b.classList.add('selected');answers[qid]=v;}});
+        const ti=el.querySelector('[data-answer]');if(ti)ti.value=v;
+      } else if(typeof v==='number'){
+        const sb=el.querySelector('.scale-btn[data-val="'+v+'"]');
+        if(sb){sb.classList.add('selected');answers[qid]=v;}
+      } else if(Array.isArray(v)){
+        v.forEach(x=>{const b=el.querySelector('.opt-btn[data-val="'+x+'"]');if(b)b.classList.add('selected');});
+        answers[qid]=v;
+      }
+    });
+    upd();toast('تم استعادة المسودة','success');
+  }catch(e){toast('خطأ في المسودة','error');}
+}
+
+function toast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast show '+type;
+  clearTimeout(t._t);t._t=setTimeout(()=>t.className='toast',3000);
+}
+upd();
+</script>
+</body>
+</html>
